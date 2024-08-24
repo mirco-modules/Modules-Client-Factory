@@ -4,7 +4,10 @@ import feign.Client;
 import feign.Feign;
 import feign.slf4j.Slf4jLogger;
 import org.khasanof.factory.configurer.BaseMsClientConfigurer;
+import org.khasanof.factory.util.ServiceNameUtil;
 import org.springframework.cloud.openfeign.support.SpringMvcContract;
+
+import static org.khasanof.factory.util.ServiceNameUtil.checkStartWithHttp;
 
 /**
  * @author Nurislom
@@ -42,7 +45,7 @@ public abstract class AbstractMsClientFactory implements BaseMsClientFactory {
      * @return
      */
     protected <T> T build(Feign.Builder builder, Class<T> clientClass) {
-        return build(builder, clientClass, baseMsClientConfigurer.getServiceName());
+        return build(builder, clientClass, checkStartWithHttp(baseMsClientConfigurer.getServiceName()));
     }
 
     /**
